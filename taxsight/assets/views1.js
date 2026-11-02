@@ -138,7 +138,7 @@
           <hr class="hr"><div class="legend" id="legend"></div></div>
         <div class="ov ins" id="ins"></div>
         <div class="ov bl" style="display:flex;gap:4px;padding:6px;align-items:center">
-          <button class="btn sm ghost" id="rl" aria-label="Rotate left">${icon('rotate')}</button>
+          <button class="btn sm" id="zo" aria-label="Zoom out" style="width:28px;justify-content:center;font-size:15px">−</button><button class="btn sm" id="zi" aria-label="Zoom in" style="width:28px;justify-content:center;font-size:15px">+</button><button class="btn sm ghost" id="rl" aria-label="Rotate">${icon('rotate')}</button>
           <div class="seg" id="tiltseg"><button aria-pressed="false" data-t="0">2D</button><button aria-pressed="true" data-t="0.92">3D</button></div>
           <button class="btn sm" id="fit">Reset view</button><button class="btn sm primary" id="scan">${icon('bolt')}Run AI scan</button></div>
         <div class="ov bc" style="left:360px;transform:none;width:min(430px,calc(100% - 760px))"><div class="row-flex"><b style="font:600 12.5px var(--f-title)">Imagery epoch</b><span class="tag brand" id="epl">2026</span><div class="sp"></div><button class="btn sm" id="play">${icon('play')}Replay growth</button></div>
@@ -149,7 +149,7 @@
         const L = { status: '<div class="note">Declared buildings are muted so the problem cases stand out.</div>', risk: '<div style="width:100%"><div style="height:8px;border-radius:4px;background:linear-gradient(90deg,var(--map-idle),var(--warn),var(--bad))"></div><div class="row-flex note" style="justify-content:space-between;margin-top:3px"><span>Low</span><span>High risk</span></div></div>', use: '<div><i class="sw" style="background:rgb(106,139,255)"></i>Residential</div><div><i class="sw" style="background:rgb(176,124,240)"></i>Mixed</div><div><i class="sw" style="background:rgb(44,196,176)"></i>Commercial</div>', change: '<div><i class="sw" style="background:var(--bad)"></i>Floors added since 2019</div><div><i class="sw" style="background:var(--map-idle)"></i>Unchanged</div>' };
         $('#legend').innerHTML = L[map.layer];
       };
-      const epNote = () => { const ep = map.epoch; let n = 0, m = 0; TS.buildings.forEach((b) => { const d = b.floorsAt(ep) - b.floorsAt(2019); if (d > 0) { n += d; m++; } }); $('#epn').textContent = ep === 2019 ? 'Baseline epoch. Heights from LiDAR and satellite.' : n + ' new floors detected in ' + m + ' buildings since 2019. Orbit with Shift+drag.'; $('#epl').textContent = ep; };
+      const epNote = () => { const ep = map.epoch; let n = 0, m = 0; TS.buildings.forEach((b) => { const d = b.floorsAt(ep) - b.floorsAt(2019); if (d > 0) { n += d; m++; } }); $('#epn').textContent = ep === 2019 ? 'Baseline epoch. Heights from LiDAR and satellite.' : n + ' new floors detected in ' + m + ' buildings since 2019. Drag to pan, scroll to zoom, Shift+drag to orbit.'; $('#epl').textContent = ep; };
       const ins = (b) => {
         const box = $('#ins'); if (!b) { box.innerHTML = '<div class="ih"><h4>Property inspector</h4><div class="note">Click any building. Red ones are the interesting ones.</div></div>'; return; }
         box.innerHTML = '<div class="ih"><div class="row-flex"><h4 style="margin:0">' + b.id + '</h4><div class="sp"></div>' + st(b.status) + '</div><div class="note">' + b.area + ' · Holding ' + b.holding + ' · ' + b.use.replace('res', 'Residential').replace('mix', 'Mixed use').replace('com', 'Commercial') + '</div></div><div class="ib">' +
@@ -172,7 +172,7 @@
       $('#flt').addEventListener('change', () => { const on_ = $$('#flt input').map((i) => i.checked); map.filter = on_.every(Boolean) ? null : (b) => on_[b.status]; map.dirty = true; });
       $('#ep').addEventListener('input', (e) => { map.epoch = +e.target.value; map.dirty = true; epNote(); });
       $('#play').addEventListener('click', () => { map.layer = 'change'; $$('#layers .layer').forEach((x) => x.setAttribute('aria-pressed', x.dataset.l === 'change')); legend(); const o = { v: 2019 }; map.epoch = 2019; gsap.to(o, { v: 2026, duration: 5, ease: 'none', onUpdate: () => { map.epoch = Math.round(o.v); $('#ep').value = map.epoch; map.dirty = true; epNote(); } }); });
-      $('#rl').addEventListener('click', () => map.rotate(0.6)); $('#fit').addEventListener('click', () => { map.fit(); map.tween({ yaw: -0.52, tilt: 0.92 }); });
+      $('#rl').addEventListener('click', () => map.rotate(0.6)); $('#zi').addEventListener('click', () => map.zoomBy(1.4)); $('#zo').addEventListener('click', () => map.zoomBy(1 / 1.4)); $('#fit').addEventListener('click', () => { map.fit(); map.tween({ yaw: -0.52, tilt: 0.92 }); });
       $('#tiltseg').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; $$('#tiltseg button').forEach((x) => x.setAttribute('aria-pressed', x === b)); map.setTilt(+b.dataset.t); });
       $('#scan').addEventListener('click', () => { map.sweep(2.6); toast('AI scan: re-classifying ' + fmt(TS.total) + ' buildings'); });
       if (opts.focus && S.sel) setTimeout(() => map.focus(S.sel, 1.9, 1.2), 900);

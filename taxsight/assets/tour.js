@@ -5,7 +5,7 @@
   const h = TS.hero, m = h.model;
   const STEPS = [
     { t: 'Open the 3D map of Zone 10', d: 'Every building glows green, amber or red by compliance. The AI scan has classified all ' + TS.total.toLocaleString('en-US') + ' buildings in this demo extract.', run: () => go('map', { keep: false }) },
-    { t: 'Pick one red building', d: 'We zoom to a nine-storey mixed-use building on a main road. Status: under-declared.', run: () => { go('map', { keep: false }); setTimeout(() => { const mp = S.map; if (!mp) return; pickB(h); mp.sel = h; mp.onSelect && mp.onSelect(h); mp.focus(h, 2.4, 1.4); }, 1500); } },
+    { t: 'Pick one red building', d: 'We zoom to a nine-storey mixed-use building on a main road. Status: under-declared.', run: () => { go('map', { keep: false }); setTimeout(() => { const mp = S.map; if (!mp) return; pickB(h); mp.sel = h; mp.onSelect && mp.onSelect(h); mp.focus(h, 1.7, 1.4); }, 1500); } },
     { t: 'Property 360', d: h.floors + ' floors built, ' + h.declFloors + ' declared. ' + h.shops.length + ' shops read from signboards. Residential gas tariff on a commercial floor.', run: () => { pickB(h); go('p360'); } },
     { t: 'The Owner Graph', d: 'The same owner is linked to ' + (h.cluster.count - 1) + ' more buildings under family and company names. Alone each looks small. Together they are one large undeclared portfolio.', run: () => { pickB(h); go('owners'); } },
     { t: 'Revenue Gap Engine', d: 'Estimated rent ' + tk(m.est) + ' per month, declared ' + tk(h.rentDecl) + '. Tax gap about ' + tk(h.gapAnnual, 0) + ' per year, ' + Math.round(m.conf * 100) + '% confidence. Try the sliders.', run: () => { pickB(h); go('gap'); } },
