@@ -1,0 +1,90 @@
+/* TaxSight AI · shared tokens, fonts, theme */
+@font-face { font-family: 'Space Grotesk'; font-weight: 500; font-display: swap; src: url(fonts/sg-500.woff2) format('woff2'); }
+@font-face { font-family: 'Space Grotesk'; font-weight: 600; font-display: swap; src: url(fonts/sg-600.woff2) format('woff2'); }
+@font-face { font-family: 'Space Grotesk'; font-weight: 700; font-display: swap; src: url(fonts/sg-700.woff2) format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans'; font-weight: 400; font-display: swap; src: url(fonts/plex-400.woff2) format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans'; font-weight: 500; font-display: swap; src: url(fonts/plex-500.woff2) format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans'; font-weight: 600; font-display: swap; src: url(fonts/plex-600.woff2) format('woff2'); }
+@font-face { font-family: 'Noto Sans Bengali'; font-weight: 400; font-display: swap; src: url(fonts/bn-400.woff2) format('woff2'); unicode-range: U+0980-09FF, U+200C-200D, U+25CC; }
+@font-face { font-family: 'Noto Sans Bengali'; font-weight: 600; font-display: swap; src: url(fonts/bn-600.woff2) format('woff2'); unicode-range: U+0980-09FF, U+200C-200D, U+25CC; }
+
+:root {
+  --f-title: 'Space Grotesk', 'Noto Sans Bengali', system-ui, sans-serif;
+  --f-body: 'IBM Plex Sans', 'Noto Sans Bengali', system-ui, sans-serif;
+
+  --bg: #EEF1F5;
+  --surface: #FFFFFF;
+  --surface-2: #F5F7FA;
+  --surface-3: #EBEFF4;
+  --ink: #0E1726;
+  --ink-2: #46536A;
+  --ink-3: #7B8799;
+  --line: #DEE3EA;
+  --line-2: #C9D1DC;
+  --brand: #1D45E3;
+  --brand-ink: #FFFFFF;
+  --brand-soft: #E6ECFF;
+  --brand-line: #BCCBFF;
+
+  --ok: #0F8F6C;   --ok-soft: #DDF3EC;
+  --warn: #C98A00; --warn-soft: #FBF0D2;
+  --bad: #D5323C;  --bad-soft: #FBE3E5;
+
+  --map-bg: #E4E9F0;
+  --map-road: #FFFFFF;
+  --map-road-art: #FFFFFF;
+  --map-water: #BFD3EA;
+  --map-park: #D3E4D5;
+  --map-ground: #DCE2EA;
+  --map-idle: #B9C3D1;
+  --map-idle-side: #A5B0C1;
+
+  --shadow: 0 1px 2px rgba(14, 23, 38, .05), 0 8px 24px -12px rgba(14, 23, 38, .18);
+  color-scheme: light;
+}
+:root[data-theme='dark'] {
+  --bg: #090E18;
+  --surface: #0F1624;
+  --surface-2: #131C2D;
+  --surface-3: #192438;
+  --ink: #E8EDF6;
+  --ink-2: #A0ACC0;
+  --ink-3: #6D7A91;
+  --line: #1E2A3F;
+  --line-2: #2A384F;
+  --brand: #7C9BFF;
+  --brand-ink: #081028;
+  --brand-soft: #16224A;
+  --brand-line: #2B3E80;
+
+  --ok: #35C79B;   --ok-soft: #0E2B26;
+  --warn: #F0B232; --warn-soft: #30260B;
+  --bad: #FF6B73;  --bad-soft: #35161A;
+
+  --map-bg: #0B1220;
+  --map-road: #162033;
+  --map-road-art: #1C2A42;
+  --map-water: #12304D;
+  --map-park: #10281F;
+  --map-ground: #0E1626;
+  --map-idle: #2A384F;
+  --map-idle-side: #1F2B3F;
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px -12px rgba(0, 0, 0, .6);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 400 13px/1.5 var(--f-body);
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  font-variant-numeric: tabular-nums;
+}
+h1, h2, h3, h4 { font-family: var(--f-title); font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 4px; }
+.bn { font-family: 'Noto Sans Bengali', var(--f-body); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }

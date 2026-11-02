@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TaxSight AI · Interactive demo</title>
+<meta name="description" content="Interactive demo of TaxSight AI: revenue intelligence for NBR, built on synthetic data for Tax Zone 10, Dhaka.">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/demo.css">
+<style>
+  .halo { position: fixed; }
+  .tour { left: auto; right: 22px; }
+  #welcome { position: fixed; inset: 0; z-index: 200; background: var(--bg); display: grid; place-items: center; padding: 24px; }
+  #welcome .wb { max-width: 560px; }
+  #welcome h1 { font-size: 34px; line-height: 1.12; margin: 10px 0 12px; }
+  #welcome .lead { color: var(--ink-2); font-size: 15px; max-width: 480px; }
+  #welcome .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--ink-3); font-size: 12px; }
+  #welcome .row { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+  #welcome .btn { padding: 9px 16px; font-size: 13.5px; }
+  #welcome .facts { display: flex; gap: 22px; margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 12px; flex-wrap: wrap; }
+  #welcome .facts b { display: block; font: 500 17px var(--f-title); color: var(--ink); }
+  .skip { position: absolute; left: -999px; } .skip:focus { left: 8px; top: 8px; z-index: 300; background: var(--surface); padding: 6px 10px; border-radius: 6px; }
+</style>
+</head>
+<body>
+<a class="skip" href="#view">Skip to content</a>
+<div class="app">
+  <aside class="rail" aria-label="Modules">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7" fill="var(--brand)"/><path d="M6 21V13h4v8M12 21V8h4v13M18 21v-6h4v6" fill="var(--brand-ink)"/><path d="M4 9 24 4" stroke="var(--brand-ink)" stroke-width="1.5" stroke-linecap="round" opacity=".7"/></svg>
+      <div><b>TaxSight AI</b><small>Zone 10 pilot</small></div>
+    </div>
+    <nav id="nav" aria-label="Views"></nav>
+    <div class="rail-foot">Interactive demo. Every building, owner and figure is synthetic.</div>
+  </aside>
+  <div class="main">
+    <header class="top">
+      <div><h1 id="title">Command Centre</h1><div class="crumb" id="crumb"></div></div>
+      <div class="sp"></div>
+      <span class="tag syn" title="No real taxpayer data is used"><i class="dot"></i>Synthetic data</span>
+      <label class="note row-flex" style="gap:6px">Role <select class="sel" id="role" aria-label="Demo role"></select></label>
+      <button class="btn" id="themeBtn" aria-label="Toggle light or dark mode"></button>
+      <button class="btn primary" id="tourBtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>Guided demo</button>
+    </header>
+    <main class="view" id="view" tabindex="-1"></main>
+  </div>
+</div>
+<div class="tour" id="tour" role="dialog" aria-label="Guided demo"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="tip" id="tip"></div>
+
+<div id="welcome" role="dialog" aria-label="Welcome">
+  <div class="wb">
+    <div class="eyebrow"><svg width="22" height="22" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7" fill="var(--brand)"/><path d="M6 21V13h4v8M12 21V8h4v13M18 21v-6h4v6" fill="var(--brand-ink)"/></svg>TaxSight AI · interactive demo for NBR</div>
+    <h1 id="wt">From a map to a revenue engine</h1>
+    <p class="lead">IWM's survey shows what is on the ground. This demo shows what happens next: who to act on, how much is owed, and what to do, on a synthetic Tax Zone 10.</p>
+    <div class="row"><button class="btn primary" id="w1">Start the 5-minute guided demo</button><button class="btn" id="w2">Explore on my own</button></div>
+    <div class="facts"><span><b>11</b>modules</span><span><b>12</b>AI capabilities</span><span><b>25</b>zones by design</span><span><b>EN + বাংলা</b>copilot</span></div>
+  </div>
+</div>
+
+<script src="assets/gsap.min.js"></script>
+<script src="assets/ScrollTrigger.min.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/map.js"></script>
+<script src="assets/core.js"></script>
+<script src="assets/views1.js"></script>
+<script src="assets/views2.js"></script>
+<script src="assets/views3.js"></script>
+<script src="assets/views4.js"></script>
+<script src="assets/tour.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

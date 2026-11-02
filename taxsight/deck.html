@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TaxSight AI · Presentation for NBR</title>
+<meta name="description" content="TaxSight AI: revenue intelligence for NBR. The AI and big data layer on top of IWM's geospatial survey.">
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  html, body { overflow: hidden; background: var(--bg); }
+  #stage { position: absolute; left: 50%; top: 50%; width: 1280px; height: 720px; transform-origin: 0 0; }
+  .slide { position: absolute; inset: 0; padding: 92px 72px 70px; display: none; }
+  .slide.on { display: block; }
+  /* chrome */
+  .chrome { position: absolute; inset: 0; pointer-events: none; z-index: 5; font-size: 12px; color: var(--ink-3); }
+  .chrome .tl { position: absolute; left: 72px; top: 34px; display: flex; align-items: center; gap: 9px; color: var(--ink-2); font-weight: 500; }
+  .chrome .tr { position: absolute; right: 72px; top: 38px; }
+  .chrome .bl { position: absolute; left: 72px; bottom: 30px; }
+  .chrome .br { position: absolute; right: 72px; bottom: 30px; font-variant-numeric: tabular-nums; }
+  .chrome .rule { position: absolute; left: 72px; right: 72px; bottom: 58px; height: 1px; background: var(--line); }
+  .chrome .rule i { position: absolute; left: 0; top: -1px; height: 3px; background: var(--brand); width: 0; }
+  .tick { position: absolute; width: 14px; height: 14px; border: 1px solid var(--line-2); }
+  .tick.a { left: 30px; top: 30px; border-right: 0; border-bottom: 0; } .tick.b { right: 30px; top: 30px; border-left: 0; border-bottom: 0; }
+  .tick.c { left: 30px; bottom: 30px; border-right: 0; border-top: 0; } .tick.d { right: 30px; bottom: 30px; border-left: 0; border-top: 0; }
+  /* type */
+  .eyebrow { font-size: 12px; font-weight: 500; color: var(--brand); display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .eyebrow::before { content: ''; width: 18px; height: 1px; background: var(--brand); }
+  h1.t { font-size: 58px; line-height: 1.02; letter-spacing: -.03em; font-weight: 600; }
+  h2.t { font-size: 36px; line-height: 1.12; letter-spacing: -.02em; max-width: 880px; }
+  .lead { font-size: 17px; line-height: 1.55; color: var(--ink-2); max-width: 680px; margin-top: 14px; }
+  .sm { font-size: 13px; color: var(--ink-3); } .ink2 { color: var(--ink-2); }
+  b, strong { font-weight: 600; }
+  .brand { color: var(--brand); }
+  /* parts */
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; position: relative; }
+  .card.flat { background: var(--surface-2); }
+  .card h3 { font-size: 16px; margin-bottom: 6px; }
+  .card p { font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+  .grid { display: grid; gap: 16px; }
+  .g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: repeat(3, 1fr); } .g4 { grid-template-columns: repeat(4, 1fr); } .g5 { grid-template-columns: repeat(5, 1fr); }
+  .tag { display: inline-flex; font-size: 12px; padding: 3px 10px; border-radius: 99px; background: var(--surface-3); color: var(--ink-2); font-weight: 500; }
+  .tag.brand { background: var(--brand-soft); color: var(--brand); } .tag.ok { background: var(--ok-soft); color: var(--ok); } .tag.bad { background: var(--bad-soft); color: var(--bad); } .tag.warn { background: var(--warn-soft); color: var(--warn); }
+  .num { font: 500 44px/1 var(--f-title); letter-spacing: -.03em; }
+  .num.md { font-size: 30px; } .num.sm2 { font-size: 22px; }
+  .ico { width: 36px; height: 36px; border-radius: 10px; background: var(--brand-soft); color: var(--brand); display: grid; place-items: center; margin-bottom: 14px; }
+  .ico svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .mapbox { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--map-bg); }
+  .mapbox canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .row { display: flex; align-items: center; gap: 12px; } .sp { flex: 1; }
+  .hair { height: 1px; background: var(--line); margin: 16px 0; }
+  .bar { height: 10px; border-radius: 5px; background: var(--surface-3); overflow: hidden; } .bar i { display: block; height: 100%; border-radius: 5px; background: var(--brand); }
+  /* title slide */
+  .s1 { padding: 0; } .s1 .copy { position: absolute; left: 72px; top: 170px; width: 520px; }
+  .s1 .mapbox { position: absolute; right: 0; top: 0; bottom: 0; width: 640px; border-radius: 0; border: 0; border-left: 1px solid var(--line); }
+  .s1 .meta { position: absolute; left: 72px; bottom: 90px; display: flex; gap: 28px; }
+  .s1 .meta b { display: block; font: 500 20px var(--f-title); color: var(--ink); } .s1 .meta span { font-size: 12px; color: var(--ink-3); }
+  /* flow */
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; position: relative; }
+  .flow .st { padding: 0 14px 0 0; position: relative; }
+  .flow .st .n { width: 38px; height: 38px; border-radius: 50%; background: var(--brand); color: var(--brand-ink); display: grid; place-items: center; font: 600 15px var(--f-title); margin-bottom: 16px; position: relative; z-index: 1; }
+  .flow::before { content: ''; position: absolute; left: 19px; right: 40px; top: 19px; height: 1px; background: var(--brand-line); }
+  .flow h3 { font-size: 20px; margin-bottom: 6px; } .flow p { font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+  /* layers */
+  .lay { display: grid; grid-template-columns: 150px 1fr; gap: 12px; margin-bottom: 8px; }
+  .lay .ln { border-radius: 10px; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--line); }
+  .lay .ln b { font: 600 14px var(--f-title); display: block; } .lay .ln span { font-size: 12px; color: var(--ink-3); }
+  .lay.ai .ln { background: var(--brand-soft); border-color: var(--brand-line); }
+  .lay .bl { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .lay .bk { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 10px 12px; position: relative; overflow: hidden; }
+  .lay .bk b { font: 600 13px var(--f-title); display: block; } .lay .bk span { font-size: 12px; color: var(--ink-3); }
+  .lay.ai .bk::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--brand) 20%, transparent) 50%, transparent 70%); transform: translateX(-100%); animation: sw 3.4s ease-in-out infinite; animation-delay: var(--d, 0s); }
+  @keyframes sw { 55%, 100% { transform: translateX(100%); } }
+  /* timeline */
+  .tl { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 8px; }
+  .tl::before { content: ''; position: absolute; left: 0; right: 0; top: 62px; height: 1px; background: var(--line-2); }
+  .tl .ph { position: relative; }
+  .tl .ph .d { height: 14px; width: 14px; border-radius: 50%; border: 2px solid var(--brand); background: var(--bg); position: absolute; top: 56px; left: 20px; z-index: 1; }
+  .tl .ph.now .d { background: var(--brand); box-shadow: 0 0 0 5px var(--brand-soft); }
+  .tl .when { font: 600 15px var(--f-title); height: 40px; padding-top: 6px; }
+  .tl .box { margin-top: 38px; }
+  .gate { font-size: 12px; color: var(--ink-2); margin-top: 10px; display: flex; gap: 6px; align-items: flex-start; }
+  .gate::before { content: '◆'; color: var(--brand); font-size: 10px; margin-top: 3px; }
+  /* nav hint */
+  .nav { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 20; opacity: 0; transition: opacity .25s; }
+  body:hover .nav { opacity: 1; }
+  .nav button { border: 1px solid var(--line-2); background: var(--surface); color: var(--ink); border-radius: 8px; padding: 5px 11px; font-size: 12px; }
+  .nav button:hover { border-color: var(--brand); color: var(--brand); }
+  .hit { position: fixed; top: 0; bottom: 0; width: 7%; z-index: 10; cursor: pointer; } .hit.l { left: 0; } .hit.r { right: 0; }
+  @media print { html, body { overflow: visible; } #stage { position: static; transform: none !important; } .slide { display: block !important; position: relative; height: 720px; page-break-after: always; } .nav, .hit, .chrome { display: none; } @page { size: 1280px 720px; margin: 0; } }
+  @media (prefers-reduced-motion: reduce) { .lay.ai .bk::after { animation: none; } }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="chrome" aria-hidden="true">
+    <i class="tick a"></i><i class="tick b"></i><i class="tick c"></i><i class="tick d"></i>
+    <div class="tl"><svg width="20" height="20" viewBox="0 0 28 28"><rect width="28" height="28" rx="7" fill="var(--brand)"/><path d="M6 21V13h4v8M12 21V8h4v13M18 21v-6h4v6" fill="var(--brand-ink)"/><path d="M4 9 24 4" stroke="var(--brand-ink)" stroke-width="1.5" stroke-linecap="round" opacity=".7"/></svg>TaxSight AI</div>
+    <div class="tr" id="sec"></div>
+    <div class="rule"><i id="prog"></i></div>
+    <div class="bl">Concept for discussion · November 2026 · Illustrative figures use synthetic data</div>
+    <div class="br" id="cnt"></div>
+  </div>
+
+  <!-- 1 -->
+  <section class="slide s1" data-sec="">
+    <div class="copy">
+      <div class="eyebrow" data-a>For the National Board of Revenue</div>
+      <h1 class="t" data-a id="h1">TaxSight AI</h1>
+      <p class="lead" style="font-size:20px;color:var(--ink);margin-top:18px" data-a>Revenue intelligence on top of the geospatial survey. It tells NBR whom to act on, how much is owed, and what to do next.</p>
+      <p class="lead sm" style="font-size:14px" data-a>Pilot-ready for Tax Zone 10, Dhaka. Target start: December 2026.</p>
+    </div>
+    <div class="meta" data-a><div><b>25</b><span>Dhaka zones by design</span></div><div><b>12</b><span>AI capabilities</span></div><div><b>1</b><span>number to prove it: Taka per notice</span></div></div>
+    <div class="mapbox" id="m1" data-a><canvas></canvas></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide" data-sec="The gap">
+    <div class="eyebrow" data-a>The gap</div>
+    <h2 class="t" data-a>NBR needs to collect <span class="brand">Tk 2.43 lakh crore</span> more than it ever has.</h2>
+    <div class="grid" style="grid-template-columns:1.25fr .75fr;gap:40px;margin-top:44px;align-items:center">
+      <div data-a>
+        <div class="row" style="margin-bottom:10px"><span class="ink2" style="width:170px">Best year so far</span><div class="bar sp" style="height:34px;border-radius:8px"><i id="b1" style="width:59.8%;background:var(--ink-3);border-radius:8px"></i></div><b class="num sm2" style="width:150px;text-align:right">Tk 3.61 <span class="sm">lakh crore</span></b></div>
+        <div class="row"><span class="ink2" style="width:170px">FY27 target</span><div class="bar sp" style="height:34px;border-radius:8px"><i id="b2" style="width:100%;border-radius:8px"></i></div><b class="num sm2" style="width:150px;text-align:right">Tk 6.04 <span class="sm">lakh crore</span></b></div>
+        <p class="sm" style="margin-top:14px">Sources: Financial Express, June 2026. FY26 missed its target by about Tk 87,527 crore (Dhaka Tribune).</p>
+      </div>
+      <div class="card" data-a style="border-color:var(--brand-line);background:var(--brand-soft)"><div class="eyebrow" style="margin-bottom:8px">Why rates are off the table</div><p style="color:var(--ink);font-size:16px;line-height:1.5">The government has ruled out raising rates. Growth has to come from <b>finding what is not yet taxed</b>: a wider base, using data.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide" data-sec="The gap">
+    <div class="eyebrow" data-a>Why now</div>
+    <h2 class="t" data-a>Detection and enforcement is the main lever left.</h2>
+    <div class="grid g4" style="margin-top:40px">
+      <div class="card" data-a><div class="num">6.8%</div><p style="margin-top:12px;color:var(--ink)"><b>Tax-to-GDP</b></p><p>Among the lowest in the world. Property and rent are a large blind spot.</p><p class="sm" style="margin-top:10px">BSS, Sep 2026</p></div>
+      <div class="card" data-a><div class="num">10%</div><p style="margin-top:12px;color:var(--ink)"><b>Medium-term target</b></p><p>15% by 2035. Needs tools that scale beyond one zone.</p><p class="sm" style="margin-top:10px">Financial Express</p></div>
+      <div class="card" data-a><div class="num">RMD</div><p style="margin-top:12px;color:var(--ink)"><b>Owns enforcement</b></p><p>NBR is splitting into policy and revenue management. We design for RMD from day one.</p><p class="sm" style="margin-top:10px">Daily Star</p></div>
+      <div class="card" data-a><div class="num">Rwanda</div><p style="margin-top:12px;color:var(--ink)"><b>Proof elsewhere</b></p><p>Raised tax-to-GDP without raising rates, by linking third-party data. India runs "Project Insight".</p></div>
+    </div>
+    <p class="lead" style="margin-top:28px" data-a>NBR has also asked for outside help with digital forensic data analysis. It knows the analytics capacity is thin.</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide" data-sec="The solution">
+    <div class="eyebrow" data-a>Two workstreams, one pilot</div>
+    <h2 class="t" data-a>IWM sees the ground. TaxSight decides, acts and scales.</h2>
+    <div class="grid" style="grid-template-columns:1fr 70px 1.25fr;margin-top:40px;align-items:stretch">
+      <div class="card" data-a><div class="tag" style="margin-bottom:12px">IWM · the eyes</div><h3 style="font-size:20px">Geospatial survey</h3><p style="margin-top:8px">LiDAR, drone photogrammetry, mobile mapping, satellite and Mouza maps. Every building in Zone 10 gets an ID and a Declared, Under-declared or Undeclared tag.</p><div class="hair"></div><p class="sm">Output: a 3D building registry linked to owner and tax records.</p></div>
+      <div class="row" style="justify-content:center" data-a><svg width="44" height="24" viewBox="0 0 44 24" fill="none" stroke="var(--brand)" stroke-width="1.6" stroke-linecap="round"><path d="M2 12h38M32 4l8 8-8 8"/></svg></div>
+      <div class="card" data-a style="border-color:var(--brand-line);background:var(--brand-soft)"><div class="tag brand" style="margin-bottom:12px">TaxSight · the brain and the hands</div><h3 style="font-size:20px">AI and scalable big data platform</h3><div class="grid g2" style="margin-top:10px;gap:10px 22px"><p><b style="color:var(--ink)">Find</b> hidden owners, floors, rent and businesses across 10+ agency datasets</p><p><b style="color:var(--ink)">Value</b> rent and tax owed per building, with a range</p><p><b style="color:var(--ink)">Prioritise</b> by expected recovery per officer hour</p><p><b style="color:var(--ink)">Act</b> with Bangla notices, case files and a field app</p></div><div class="hair" style="background:var(--brand-line)"></div><p class="sm" style="color:var(--ink-2)">Output: ranked, explainable, ready-to-send cases. Built for 25 zones on day one.</p></div>
+    </div>
+    <p class="lead" data-a style="margin-top:24px">Both teams work for NBR on the same 12 weeks. We do not compete with IWM. We make their pilot sell itself.</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide" data-sec="The solution">
+    <div class="eyebrow" data-a>How it works</div>
+    <h2 class="t" data-a>A loop that gets sharper every cycle.</h2>
+    <div class="flow" style="margin-top:54px">
+      <div class="st" data-a><div class="n">1</div><h3>Find</h3><p>Entity resolution and anomaly detection across agency data.</p></div>
+      <div class="st" data-a><div class="n">2</div><h3>Value</h3><p>AI rent model. Taka gap per building with a confidence range.</p></div>
+      <div class="st" data-a><div class="n">3</div><h3>Prioritise</h3><p>"Revenue at Risk" ranks who gets a notice first.</p></div>
+      <div class="st" data-a><div class="n">4</div><h3>Act</h3><p>GenAI drafts the notice in Bangla. The officer reviews and signs.</p></div>
+      <div class="st" data-a><div class="n">5</div><h3>Learn</h3><p>Every visit and appeal retrains the models. Hit rates rise.</p></div>
+    </div>
+    <div class="card flat" data-a style="margin-top:56px;display:flex;gap:20px;align-items:center"><div class="num md brand" style="min-width:120px">1 rule</div><p style="font-size:16px;color:var(--ink)">AI recommends, a human officer decides. Every score comes with reasons a taxpayer and a court can understand.</p></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide" data-sec="The solution">
+    <div class="eyebrow" data-a>The product</div>
+    <h2 class="t" data-a>Seven modules. Each sells alone, together a full product.</h2>
+    <div class="grid g4" style="margin-top:30px;gap:12px" id="mods"></div>
+    <div class="card" data-a style="margin-top:14px;border-color:var(--brand-line);background:var(--brand-soft);display:flex;gap:18px;align-items:center;padding:16px 20px"><span class="tag brand">Add-on</span><p style="color:var(--ink);font-size:15px"><b>Business Discovery.</b> The same signboard reading and utility data finds unregistered shops, clinics and offices for VAT and trade licence. One survey, three tax heads.</p></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide" data-sec="The solution">
+    <div class="eyebrow" data-a>One building, end to end</div>
+    <h2 class="t" data-a>From a signboard to a Taka figure.</h2>
+    <div class="grid" style="grid-template-columns:340px 1fr;gap:34px;margin-top:30px;align-items:start">
+      <div class="card" data-a style="padding:14px"><div id="fac"></div><div class="row sm" style="margin-top:8px"><span>Adabor · mixed use</span><span class="sp"></span><span class="tag warn">Under-declared</span></div></div>
+      <div>
+        <div class="grid g2" style="gap:12px" id="hero"></div>
+        <div class="card" data-a style="margin-top:12px;display:flex;align-items:center;gap:20px;padding:18px 22px;border-color:var(--brand-line)"><div><div class="sm">Tax gap per year</div><div class="num brand" id="gapn" style="font-size:52px">Tk 13.0 lakh</div></div><div class="sp"></div><div style="text-align:right"><div class="sm">Confidence</div><div class="num md">87%</div></div></div>
+        <p class="sm" style="margin-top:10px" data-a>Synthetic building built to follow the pilot demo script. Try it in the interactive demo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide" data-sec="The AI">
+    <div class="eyebrow" data-a>Twelve AI capabilities</div>
+    <h2 class="t" data-a>Each one answers a question an officer already asks.</h2>
+    <div class="grid g5" style="margin-top:34px;gap:12px" id="caps"></div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide" data-sec="Platform">
+    <div class="eyebrow" data-a>Architecture</div>
+    <h2 class="t" data-a>A geospatial lakehouse under an AI layer.</h2>
+    <div style="margin-top:26px" id="arch"></div>
+    <p class="sm" data-a style="margin-top:8px;margin-left:162px">Field results flow back up and retrain the models each cycle. Open standards throughout, so NBR is not locked to one vendor.</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide" data-sec="Platform">
+    <div class="eyebrow" data-a>Scalability and big data</div>
+    <h2 class="t" data-a>Adding a zone is configuration, not a new project.</h2>
+    <div class="grid g3" style="margin-top:34px;gap:16px" id="scale"></div>
+    <div class="grid g4" style="margin-top:16px;gap:12px" data-a>
+      <div class="card flat"><b style="font-size:14px">Re-score in hours</b><p>Quarterly full re-score of every building in a 24-hour window.</p></div>
+      <div class="card flat"><b style="font-size:14px">Hundreds of officers</b><p>Concurrent web and mobile users, offline-first in the field.</p></div>
+      <div class="card flat"><b style="font-size:14px">New source in days</b><p>Standard connectors for each agency feed.</p></div>
+      <div class="card flat"><b style="font-size:14px">Delta Lake on Spark</b><p>Sedona and PostGIS for city-scale spatial joins.</p></div>
+    </div>
+    <p class="sm" style="margin-top:12px" data-a>Design budgets from per-building compute costs (about 1.4 GPU-seconds and 46 CPU-seconds per building). To be confirmed on pilot data. National is a planning case of 120 zone-equivalents.</p>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide" data-sec="Trust">
+    <div class="eyebrow" data-a>Governance and responsible AI</div>
+    <h2 class="t" data-a>Tax data is among the most sensitive a state holds.</h2>
+    <div class="grid g4" style="margin-top:38px" id="trust"></div>
+    <p class="lead" data-a style="margin-top:26px">This is also a selling point: NBR can show the public and its development partners (IMF, World Bank, ADB) that the system is fair and auditable.</p>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide" data-sec="Impact">
+    <div class="eyebrow" data-a>Revenue impact (illustrative)</div>
+    <h2 class="t" data-a>Same officers, same notices, double the revenue.</h2>
+    <div class="grid" style="grid-template-columns:1.1fr .9fr;gap:32px;margin-top:34px">
+      <div class="card" data-a>
+        <div class="row sm" style="margin-bottom:12px"><span style="width:150px"></span><b style="flex:1;color:var(--ink-3)">Rules only</b><b style="flex:1;color:var(--brand)">With TaxSight</b></div>
+        <div class="row" style="padding:9px 0;border-top:1px solid var(--line)"><span class="ink2" style="width:150px">Notices per year</span><b style="flex:1">1,000</b><b style="flex:1">1,000</b></div>
+        <div class="row" style="padding:9px 0;border-top:1px solid var(--line)"><span class="ink2" style="width:150px">Hit rate</span><b style="flex:1">30%</b><b style="flex:1" class="brand">60%</b></div>
+        <div class="row" style="padding:9px 0;border-top:1px solid var(--line)"><span class="ink2" style="width:150px">Extra tax per hit</span><b style="flex:1">Tk 1.5 lakh</b><b style="flex:1">Tk 1.5 lakh</b></div>
+        <div class="row" style="padding:12px 0;border-top:1px solid var(--line-2)"><span style="width:150px"><b>One zone, per year</b></span><b class="num md" style="flex:1;color:var(--ink-3)">Tk 4.5 cr</b><b class="num md brand" style="flex:1">Tk 9 cr</b></div>
+        <div class="row" style="padding:12px 0;border-top:1px solid var(--line)"><span style="width:150px"><b>25 Dhaka zones</b></span><b class="num md" style="flex:1;color:var(--ink-3)">Tk 112 cr</b><b class="num md brand" style="flex:1">Tk 225 cr</b></div>
+        <p class="sm" style="margin-top:6px">All inputs are assumptions, to be replaced with Zone 10 data at inception.</p>
+      </div>
+      <div class="stack" data-a>
+        <div class="eyebrow" style="margin-bottom:10px">New revenue streams, not just better collection</div>
+        <div class="grid" style="gap:8px">
+          <div class="card flat row" style="padding:12px 16px"><b style="flex:1">Undeclared rental income</b><span class="tag">Income tax</span></div>
+          <div class="card flat row" style="padding:12px 16px"><b style="flex:1">Hidden floors and extensions</b><span class="tag">Income tax, wealth surcharge</span></div>
+          <div class="card flat row" style="padding:12px 16px"><b style="flex:1">Unregistered shops and offices</b><span class="tag brand">VAT, trade licence</span></div>
+          <div class="card flat row" style="padding:12px 16px"><b style="flex:1">Multi-property non-filers</b><span class="tag">Income tax</span></div>
+          <div class="card flat row" style="padding:12px 16px"><b style="flex:1">Property sale under-valuation</b><span class="tag">Capital gains, stamp duty</span></div>
+        </div>
+        <p class="sm" style="margin-top:10px">Shared platform also serves RAJUK, city corporations, utilities and disaster planning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide" data-sec="Plan">
+    <div class="eyebrow" data-a>Roadmap</div>
+    <h2 class="t" data-a>Start now on synthetic data. Pilot in December.</h2>
+    <div class="tl" data-a>
+      <div class="ph now"><div class="when">Now · Nov 2026</div><i class="d"></i><div class="box card"><h3>Prepare</h3><p>Agree scope with NBR and IWM. Data-sharing letters. Platform and models built on synthetic data. This demo.</p><div class="gate">Gate 1: data access letters signed</div></div></div>
+      <div class="ph"><div class="when">Dec 2026</div><i class="d"></i><div class="box card"><h3>Pilot starts</h3><p>Zone 10 goes live in IWM's 12-week pilot. Real feeds replace synthetic ones as they arrive.</p></div></div>
+      <div class="ph"><div class="when">Jan to Feb 2027</div><i class="d"></i><div class="box card"><h3>Field test</h3><p>Top 300 AI-ranked cases visited. AI list against rules-only list.</p><div class="gate">Gate 2: AI beats rules on hit rate and Taka per notice</div></div></div>
+      <div class="ph"><div class="when">2027 onward</div><i class="d"></i><div class="box card"><h3>Scale</h3><p>All 25 Dhaka zones, notice copilot live, taxpayer portal. Then Chattogram and others.</p><div class="gate">Gate 3: recovery well above cost</div></div></div>
+    </div>
+    <div class="card flat" data-a style="margin-top:22px;display:flex;gap:16px;align-items:center;padding:14px 20px"><span class="tag warn">No sample data yet</span><p style="color:var(--ink);font-size:14.5px">We start on synthetic and public data. The platform does not change when real data lands; only the connectors switch on. Dates are targets, to be confirmed with NBR and IWM.</p></div>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide" data-sec="Plan">
+    <div class="eyebrow" data-a>The ask</div>
+    <h2 class="t" data-a>Four decisions this month make a December pilot possible.</h2>
+    <div class="grid g2" style="margin-top:34px;gap:14px" id="asks"></div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:16px;margin-top:20px" data-a>
+      <div class="card flat"><div class="sm">The one number we will be judged on</div><div class="num md brand" style="margin-top:6px">Taka recovered per notice sent</div><p class="sm" style="margin-top:6px">Against NBR's current baseline, on the same Zone 10 cases.</p></div>
+      <div class="card" style="border-color:var(--brand-line);background:var(--brand-soft);display:flex;flex-direction:column;justify-content:center"><b style="font-size:16px">See it working</b><p style="color:var(--ink);margin-top:4px">Open the interactive demo and take the 5-minute guided tour. Light and dark mode, Bangla and English.</p></div>
+    </div>
+  </section>
+</div>
+
+<div class="hit l" id="hl" aria-hidden="true"></div><div class="hit r" id="hr" aria-hidden="true"></div>
+<div class="nav"><button id="pv">← Back</button><button id="nx">Next →</button><button id="th">Light / dark (T)</button><button id="fs">Fullscreen (F)</button><button id="pr">Print to PDF (P)</button></div>
+
+<script src="assets/gsap.min.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/map.js"></script>
+<script src="assets/deck.js"></script>
+</body>
+</html>
