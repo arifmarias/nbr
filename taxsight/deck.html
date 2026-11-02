@@ -13,7 +13,7 @@
   .slide.on { display: block; }
   /* chrome */
   .chrome { position: absolute; inset: 0; pointer-events: none; z-index: 5; font-size: 12px; color: var(--ink-3); }
-  .chrome .tl { position: absolute; left: 72px; top: 34px; display: flex; align-items: center; gap: 9px; color: var(--ink-2); font-weight: 500; }
+  .chrome .c-tl { position: absolute; left: 72px; top: 34px; display: flex; align-items: center; gap: 9px; color: var(--ink-2); font-weight: 500; }
   .chrome .tr { position: absolute; right: 72px; top: 38px; }
   .chrome .bl { position: absolute; left: 72px; bottom: 30px; }
   .chrome .br { position: absolute; right: 72px; bottom: 30px; font-variant-numeric: tabular-nums; }
@@ -71,17 +71,17 @@
   .lay.ai .bk::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--brand) 20%, transparent) 50%, transparent 70%); transform: translateX(-100%); animation: sw 3.4s ease-in-out infinite; animation-delay: var(--d, 0s); }
   @keyframes sw { 55%, 100% { transform: translateX(100%); } }
   /* timeline */
-  .tl { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 8px; }
-  .tl::before { content: ''; position: absolute; left: 0; right: 0; top: 62px; height: 1px; background: var(--line-2); }
-  .tl .ph { position: relative; }
-  .tl .ph .d { height: 14px; width: 14px; border-radius: 50%; border: 2px solid var(--brand); background: var(--bg); position: absolute; top: 56px; left: 20px; z-index: 1; }
-  .tl .ph.now .d { background: var(--brand); box-shadow: 0 0 0 5px var(--brand-soft); }
-  .tl .when { font: 600 15px var(--f-title); height: 40px; padding-top: 6px; }
-  .tl .box { margin-top: 38px; }
+  .tline { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 8px; }
+  .tline::before { content: ''; position: absolute; left: 0; right: 0; top: 62px; height: 1px; background: var(--line-2); }
+  .tline .ph { position: relative; }
+  .tline .ph .d { height: 14px; width: 14px; border-radius: 50%; border: 2px solid var(--brand); background: var(--bg); position: absolute; top: 56px; left: 20px; z-index: 1; }
+  .tline .ph.now .d { background: var(--brand); box-shadow: 0 0 0 5px var(--brand-soft); }
+  .tline .when { font: 600 15px var(--f-title); height: 40px; padding-top: 6px; }
+  .tline .box { margin-top: 38px; }
   .gate { font-size: 12px; color: var(--ink-2); margin-top: 10px; display: flex; gap: 6px; align-items: flex-start; }
   .gate::before { content: '◆'; color: var(--brand); font-size: 10px; margin-top: 3px; }
   /* nav hint */
-  .nav { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 20; opacity: 0; transition: opacity .25s; }
+  .nav { position: fixed; top: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 20; opacity: 0; transition: opacity .25s; }
   body:hover .nav { opacity: 1; }
   .nav button { border: 1px solid var(--line-2); background: var(--surface); color: var(--ink); border-radius: 8px; padding: 5px 11px; font-size: 12px; }
   .nav button:hover { border-color: var(--brand); color: var(--brand); }
@@ -94,7 +94,7 @@
 <div id="stage">
   <div class="chrome" aria-hidden="true">
     <i class="tick a"></i><i class="tick b"></i><i class="tick c"></i><i class="tick d"></i>
-    <div class="tl"><svg width="20" height="20" viewBox="0 0 28 28"><rect width="28" height="28" rx="7" fill="var(--brand)"/><path d="M6 21V13h4v8M12 21V8h4v13M18 21v-6h4v6" fill="var(--brand-ink)"/><path d="M4 9 24 4" stroke="var(--brand-ink)" stroke-width="1.5" stroke-linecap="round" opacity=".7"/></svg>TaxSight AI</div>
+    <div class="c-tl"><svg width="20" height="20" viewBox="0 0 28 28"><rect width="28" height="28" rx="7" fill="var(--brand)"/><path d="M6 21V13h4v8M12 21V8h4v13M18 21v-6h4v6" fill="var(--brand-ink)"/><path d="M4 9 24 4" stroke="var(--brand-ink)" stroke-width="1.5" stroke-linecap="round" opacity=".7"/></svg>TaxSight AI</div>
     <div class="tr" id="sec"></div>
     <div class="rule"><i id="prog"></i></div>
     <div class="bl">Concept for discussion · November 2026 · Illustrative figures use synthetic data</div>
@@ -257,7 +257,7 @@
   <section class="slide" data-sec="Plan">
     <div class="eyebrow" data-a>Roadmap</div>
     <h2 class="t" data-a>Start now on synthetic data. Pilot in December.</h2>
-    <div class="tl" data-a>
+    <div class="tline" data-a>
       <div class="ph now"><div class="when">Now · Nov 2026</div><i class="d"></i><div class="box card"><h3>Prepare</h3><p>Agree scope with NBR and IWM. Data-sharing letters. Platform and models built on synthetic data. This demo.</p><div class="gate">Gate 1: data access letters signed</div></div></div>
       <div class="ph"><div class="when">Dec 2026</div><i class="d"></i><div class="box card"><h3>Pilot starts</h3><p>Zone 10 goes live in IWM's 12-week pilot. Real feeds replace synthetic ones as they arrive.</p></div></div>
       <div class="ph"><div class="when">Jan to Feb 2027</div><i class="d"></i><div class="box card"><h3>Field test</h3><p>Top 300 AI-ranked cases visited. AI list against rules-only list.</p><div class="gate">Gate 2: AI beats rules on hit rate and Taka per notice</div></div></div>

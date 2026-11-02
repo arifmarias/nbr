@@ -203,6 +203,9 @@
       });
       c.addEventListener('pointerleave', () => { this.hover = null; this.onHover && this.onHover(null); });
       c.addEventListener('pointerup', (e) => { c.classList.remove('drag'); if (drag && !moved) { const r = c.getBoundingClientRect(); const h = this.hit(e.clientX - r.left, e.clientY - r.top); if (h) { this.sel = h; this.onSelect && this.onSelect(h); } } drag = null; });
+      c.addEventListener('dblclick', (e) => { const r = c.getBoundingClientRect(); this._prep(); const p = this.unproj(e.clientX - r.left, e.clientY - r.top); this.tween({ cx: p[0], cy: p[1], zoom: Math.min(6, this.cam.zoom * 1.8) }, 0.5); });
+      c.setAttribute('tabindex', '0');
+      c.addEventListener('keydown', (e) => { const k = e.key; if (k === '+' || k === '=') this.zoomBy(1.35); else if (k === '-' || k === '_') this.zoomBy(1 / 1.35); else if (k === 'ArrowLeft') this.pan(-60, 0); else if (k === 'ArrowRight') this.pan(60, 0); else if (k === 'ArrowUp') this.pan(0, -60); else if (k === 'ArrowDown') this.pan(0, 60); else if (k === 'q') this.rotate(-0.3); else if (k === 'e') this.rotate(0.3); else return; e.preventDefault(); });
       c.addEventListener('wheel', (e) => {
         e.preventDefault(); const r = c.getBoundingClientRect(); const mx = e.clientX - r.left, my = e.clientY - r.top; this._prep();
         const before = this.unproj(mx, my); const f = Math.exp(-e.deltaY * 0.0014); this.cam.zoom = Math.max(0.18, Math.min(6, this.cam.zoom * f));
@@ -211,6 +214,8 @@
     }
     // ----- API -----
     set(opts) { Object.assign(this, opts); this.dirty = true; }
+    zoomBy(f) { this.tween({ zoom: Math.max(0.18, Math.min(6, this.cam.zoom * f)) }, 0.35); }
+    pan(dx, dy) { this._prep(); const z = this.cam.zoom; const rx = dx / z, ry = dy / (z * this.ct); this.tween({ cx: this.cam.cx + rx * this.co + ry * this.si, cy: this.cam.cy - rx * this.si + ry * this.co }, 0.3); }
     rotate(d) { this.tween({ yaw: this.cam.yaw + d }, 0.6); }
     setTilt(t) { this.tween({ tilt: t }, 0.7); }
     sweep(dur = 2.6) {
